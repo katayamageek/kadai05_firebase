@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/jquery-2.1.3.min.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  データの塊（オブジェクト）
+
+  <div id="hyouzi"></div>
+
+  <!--  -->
+  <script>
+
+    const data = {
+      name: "もりた",
+      age: "35",
+    }
+
+    // かたまり（dataの家）に入ってみます
+    console.log(data, "データの塊")
+
+    // かたまりの名前（data）＞データの名前（name）…と進んでアクセスする
+    console.log(data.name, "nameまでアクセス")
+
+
+    const katayama = {
+      name: "カタヤマリョウ",
+      favorite: "playing music",
+    }
+
+    console.log(katayama.favorite, "片山の好きな物")
+
+
+
+  </script>
+  <!--  -->
+</body>
+
+</html>
