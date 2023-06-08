@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase_version9_RealtimeDB(G'sACADEMY初学者用サンプル)</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- コンテンツ表示画面 -->
+    <div>
+        <div>
+            title：<input type="text" id="uname">
+        </div>
+        <div>
+            <textarea id="text" cols="30" rows="10"></textarea>
+            <button id="send">送信</button>
+        </div>
+        <!-- ↓表示欄 -->
+        <div id="output" class="output" style="overflow: auto;height: 300px; border: 1px solid;"></div>
+    </div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }
+            from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+        // Your web app's Firebase configuration
+        // ##############課題用のSDKを反映済###############
+        const firebaseConfig = {
+            apiKey: "AIzaSyC71d7Y4lUVY7-a2Ed7pdk5Uwmu7clKWNA",
+            authDomain: "kadai05firebase.firebaseapp.com",
+            projectId: "kadai05firebase",
+            storageBucket: "kadai05firebase.appspot.com",
+            messagingSenderId: "733646537142",
+            appId: "1:733646537142:web:f2b4f719c459c350ec8117",
+            measurementId: "G-KLDFBXZ9S7"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app); //RealtimeDBに接続
+        const dbRef = ref(db, "chat"); //RealtimeDB内の"chat"を使う
+
+        //データ登録(Click)
+        // $("#send").on("click", function () {
+        //     const name = $("#uname").val();
+        //     const text = $("#text").val();
+        // alert(name + text)
+
+        $("#send").on("click", function () {
+            const msg = {
+                uname: $("#uname").val(),
+                text: $("#text").val()
+            }
+            const newPostRef = push(dbRef);
+            set(newPostRef, msg);
+
+            // ↓送信したら中を消す
+
+        })
+
+        // #####入力したデータを表示させる#####
+        //データ登録(Enter)
+
+        //最初にデータ取得＆onSnapshotでリアルタイムにデータを取得
+        // ######onChildAddedメソッドは、指定したデータベースリファレンス（データの場所）に新しい子が追加されるたびに呼び出されます。######
+        onChildAdded(dbRef, function (data) {
+            const msg = data.val();
+            const key = data.key;
+
+            // let h = "<p>";
+            // h += msg.uname;
+            // h += "<br>";
+            // h += msg.text;
+            // h += "</p>";
+
+            // このあとcssを作るのです、その際に
+            // classで一括してスタイルを作る事を見越すと
+            // テンプレートリテラルで作成する方がおススメ
+            let h = `
+            <div class="tweet">
+            <p1 class=name>${msg.uname}</p1>
+            <p class=text>${msg.text}</p>
+            </div>
+            `
+            // 以上テンプレートリテラル
+            $("#output").prepend(h);
+        })
+
+
+
+        
+
+
+
+    </script>
+</body>
+
+</html>
